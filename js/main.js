@@ -16,8 +16,15 @@ const restaurants = document.querySelector(".restaurants");
 const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
+const restaurantTitle = document.querySelector('.restaurant-title');
+const rating = document.querySelector('.rating');
+const minPrice = document.querySelector('.price');
+const category = document.querySelector('.category');
+
 
 let login = localStorage.getItem("delivery-food");
+
+const cart = [];
 
 const getData = async function (url) {
   const response = await fetch(url);
@@ -49,6 +56,8 @@ function autorized() {
     buttonAuth.style.display = "";
     userName.style.display = "";
     buttonOut.style.display = "";
+    buttonOut.style.display = "";
+
     buttonOut.removeEventListener("click", logOut);
     checkAuth();
   }
@@ -57,7 +66,8 @@ function autorized() {
   userName.textContent = login;
   buttonAuth.style.display = "none";
   userName.style.display = "inline";
-  buttonOut.style.display = "block";
+  cartButton.style.display = "flex";
+  buttonOut.style.display = "flex";
 
   buttonOut.addEventListener("click", logOut);
 }
@@ -182,6 +192,18 @@ function openGoods(e) {
   }
 }
 
+function addToCart(e) {
+  const target = e.target;
+
+  const buttonAddToCart = target.closest('.button-add.cart')
+
+  if (buttonAddToCart) {
+    const cart = target.closest('.cart');
+    const title = cart.querySelector('.card-title-reg');
+    const cost = cart.querySelector('.card-price-bold')
+  }
+}
+
 
 function init() {
   getData("./db/partners.json").then(function (data) {
@@ -189,6 +211,8 @@ function init() {
   });
 
   cartButton.addEventListener("click", toggleModal);
+
+  cardsMenu.addEventListener('click', addToCart)
 
   close.addEventListener("click", toggleModal);
 
